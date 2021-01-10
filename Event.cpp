@@ -27,12 +27,35 @@ void Event::setMapPtr(Map* map_ptr)
 //creates event at random position
 void Event::createEvent()
 {
+    //to mark which numbers have been generated
+    int randX[m_map_ptr->m_mapSize];
+    int randY[m_map_ptr->m_mapSize];
+    int position(0);
+
+    //set all values to 0
+    while (position <= m_map_ptr->m_mapSize)
+    {
+        randX[position] = 0;
+        randY[position] = 0;
+        position++;
+    }
+
     //creates fixed number of events on map
     int i = 1;
     while (i <= 3)
     {
         int eventX = rand() % m_map_ptr->m_mapSize;
         int eventY = rand() % m_map_ptr->m_mapSize;
+
+        //mark number as generated
+        if (randX[eventX] == 0)
+        {
+            randX[eventX] = 1;
+        }
+        else if (randY[eventY] == 0)
+        {
+            randY[eventY] = 1;
+        }
 
         //does not create event if event = player starting position
         if(m_map_ptr->getFloor(eventX, eventY) != 'X')
